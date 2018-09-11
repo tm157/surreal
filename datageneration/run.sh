@@ -1,6 +1,6 @@
 #!/bin/bash
 
-JOB_PARAMS=${1:-'--idx 0 --ishape 0 --stride 50'} # defaults to [0, 0, 50]
+JOB_PARAMS=${1:-'--idx 65 --ishape 0 --stride 50'} # defaults to [0, 0, 50]
 
 # SET PATHS HERE
 #FFMPEG_PATH=/home/gvarol/tools/ffmpeg/ffmpeg_build_sequoia_h264

@@ -22,6 +22,6 @@ for i in range(len(txt_paths)):
     texture_img = cv2.imread(folder + txt_paths[i])
     im = Image.fromarray(texture_img)
     for j in range(10):
-        im.save('/mnt/hdd1/tanya/surreal_out/new/Textures/Texture_{}.png'.format(img_number+j))
+        im.save('/mnt/hdd1/tanya/surreal_out/new_less_bright/Textures/Texture_{}.png'.format(img_number+j))
 
     img_number += 10
