@@ -18,8 +18,8 @@ def load_body_data(smpl_data, idx=0):
     for seq in smpl_data.files:
         if seq == ('pose_' + name):
             cmu_parms[seq.replace('pose_', '')] = {
-                    'poses': smpl_data[seq],
-                    'trans': smpl_data[seq.replace('pose_', 'trans_')]}
+                'poses': smpl_data[seq],
+                'trans': smpl_data[seq.replace('pose_', 'trans_')]}
     return(cmu_parms, name)
 
 
@@ -172,33 +172,31 @@ if __name__ == '__main__':
                     get_real_frame(seq_frame))
                 exr_file = OpenEXR.InputFile(path)
                 if k == 'normal':
-                    mat = np.transpose(np.reshape([array.array('f',
-                        exr_file.channel(Chan, FLOAT)).tolist() for Chan in \
-                                ("R", "G", "B")], (3, resx, resy)), (1, 2, 0))
+                    mat = np.transpose(np.reshape([array.array('f', exr_file.channel(
+                        Chan, FLOAT)).tolist() for Chan in ("R", "G", "B")], (3, resx, resy)), (1, 2, 0))
                     # +1 for the 1-indexing
                     dict_normal['normal_%d' % (iframe + 1)] = \
-                            mat.astype(np.float32, copy=False)
+                        mat.astype(np.float32, copy=False)
 
                 elif k == 'gtflow':
-                    mat = np.transpose(np.reshape([array.array('f', 
-                        exr_file.channel(Chan, FLOAT)).tolist() for Chan in \
-                                ("R", "G")], (2, resx, resy)), (1, 2, 0))
+                    mat = np.transpose(np.reshape([array.array('f', exr_file.channel(
+                        Chan, FLOAT)).tolist() for Chan in ("R", "G")], (2, resx, resy)), (1, 2, 0))
 
                     dict_gtflow['gtflow_%d' % (iframe + 1)] = \
-                            mat.astype(np.float32, copy=False)
+                        mat.astype(np.float32, copy=False)
 
                 elif k == 'depth':
                     mat = np.reshape([array.array('f', exr_file.channel(
                         Chan, FLOAT)).tolist() for Chan in ("R")], (resx, resy))
 
                     dict_depth['depth_%d' % (iframe + 1)] = \
-                            mat.astype(np.float32, copy=False)
+                        mat.astype(np.float32, copy=False)
 
                 elif k == 'segm':
                     mat = np.reshape([array.array('f', exr_file.channel(
                         Chan, FLOAT)).tolist() for Chan in ("R")], (resx, resy))
                     dict_segm['segm_%d' % (iframe + 1)] = \
-                            mat.astype(np.uint8, copy=False)
+                        mat.astype(np.uint8, copy=False)
                 # remove(path)
 
     import scipy.io

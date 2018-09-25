@@ -545,6 +545,7 @@ def load_body_data(smpl_data, ob, obname, gender='female', idx=0):
 
     # load all SMPL shapes
     fshapes = smpl_data['%sshapes' % gender][:, :n_sh_bshapes]
+    pdb.set_trace()
 
     return(cmu_parms, fshapes, name)
 
@@ -723,6 +724,7 @@ def main():
 
     log_message("Loading smpl data")
     smpl_data = np.load(join(smpl_data_folder, smpl_data_filename))
+    pdb.set_trace()
 
     log_message("Initializing scene")
     camera_distance = np.random.normal(8.0, 0.01)
@@ -779,6 +781,7 @@ def main():
     log_message("Loading body data")
     cmu_parms, fshapes, name = load_body_data(
         smpl_data, ob, obname, idx=idx, gender=gender)
+    pdb.set_trace()
 
     log_message("Loaded body data for %s" % name)
 
@@ -960,6 +963,7 @@ def main():
         scene.render.use_antialiasing = False
         scene.render.filepath = join(rgb_path,
                                      'Image_{}.png'.format(img_number + seq_frame))
+        pdb.set_trace()
 
         log_message("Rendering frame %d" % seq_frame)
         log_message("Rendering image {}".format(rgb_path))
