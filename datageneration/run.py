@@ -16,7 +16,7 @@ with open(textures_file) as f:
 txt_paths = sorted(txt_paths)
 img_number = 0
 for i in range(len(txt_paths)):
-    cmd = 'sh my_run.sh "--idx 65 --ishape 0 --stride 50 --index ''%d'' --img_number ''%d''"' % (i, img_number)
+    cmd = 'sh my_run.sh "--idx 59 --ishape 0 --stride 1 --index ''%d'' --img_number ''%d''"' % (i, img_number)
     os.system(cmd)
     print(txt_paths[i])
     texture_img = cv2.imread(folder + txt_paths[i])
@@ -25,3 +25,4 @@ for i in range(len(txt_paths)):
         im.save('/mnt/hdd1/tanya/surreal_out/new_less_bright/Textures/Texture_{}.png'.format(img_number+j))
 
     img_number += 10
+    ipdb.set_trace()

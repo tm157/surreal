@@ -1,1 +1,2 @@
-lsun_bg.webp
+img_bg_grey.png
+img_bg_white.png

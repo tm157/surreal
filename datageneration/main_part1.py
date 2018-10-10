@@ -686,7 +686,7 @@ def main():
     smpl_data = np.load(join(smpl_data_folder, smpl_data_filename))
 
     log_message("Initializing scene")
-    camera_distance = np.random.normal(8.0, 1)
+    camera_distance = np.random.normal(4.0, 0.1)
     params['camera_distance'] = camera_distance
     ob, obname, arm_ob, cam_ob = init_scene(scene, params, gender)
 
@@ -775,9 +775,10 @@ def main():
     # spherical harmonics material needs a script to be loaded and compiled
     scs = []
     for mname, material in materials.items():
-        scs.append(material.node_tree.nodes['Script'])
-        scs[-1].filepath = sh_dst
-        scs[-1].update()
+        if material.node_tree.nodes.get('Script') is not None:
+            scs.append(material.node_tree.nodes['Script'])
+            scs[-1].filepath = sh_dst
+            scs[-1].update()
 
     rgb_dirname = name.replace(" ", "") + '_c%04d.mp4' % (ishape + 1)
     rgb_path = join(tmp_path, rgb_dirname)
@@ -823,7 +824,6 @@ def main():
     dict_info['zrot'] = np.empty(N, dtype='float32')
     dict_info['camDist'] = camera_distance
     dict_info['stride'] = stride
-    ipdb.set_trace()
 
     if name.replace(" ", "").startswith('h36m'):
         dict_info['source'] = 'h36m'
@@ -899,8 +899,9 @@ def main():
     scene.node_tree.nodes['Image'].image = bg_img
 
     for part, material in materials.items():
-        material.node_tree.nodes['Vector Math'].inputs[1].default_value[:2] = (
-            0, 0)
+        if material.node_tree.nodes.get('Vector Math') is not None:
+            material.node_tree.nodes['Vector Math'].inputs[1].default_value[:2] = (
+                0, 0)
 
     # random light
     sh_coeffs = .7 * (2 * np.random.rand(9) - 1)
@@ -1017,14 +1018,16 @@ def main():
         log_message("Generating fg video (%s)" % cmd_ffmpeg_fg)
         os.system(cmd_ffmpeg_fg)
 
-    cmd_tar = 'tar -czvf %s/%s.tar.gz -C %s %s' % (
-        output_path, rgb_dirname, tmp_path, rgb_dirname)
-    log_message("Tarballing the images (%s)" % cmd_tar)
-    os.system(cmd_tar)
+    # MS comments
+    
+    # cmd_tar = 'tar -czvf %s/%s.tar.gz -C %s %s' % (
+        # output_path, rgb_dirname, tmp_path, rgb_dirname)
+    # log_message("Tarballing the images (%s)" % cmd_tar)
+    # os.system(cmd_tar)
 
     # save annotation excluding png/exr data to _info.mat file
-    import scipy.io
-    scipy.io.savemat(matfile_info, dict_info, do_compression=True)
+    # import scipy.io
+    # scipy.io.savemat(matfile_info, dict_info, do_compression=True)
 
 
 if __name__ == '__main__':

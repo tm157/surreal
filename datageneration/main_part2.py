@@ -76,7 +76,7 @@ if __name__ == '__main__':
     (runpass, idx) = divmod(idx, len(idx_info))
 
     log_message("start part 2")
-    ipdb.set_trace()
+    # ipdb.set_trace()
 
     import hashlib
     import random
